@@ -2,9 +2,12 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
 
-        System.out.println("Lets Go!");
+        Questions[] questions = new Questions[2];
+
+        questions[0] = new Questions("Vad betyder Jafari på persiska?", "Saffran", "Persilja", "Curry", Answer.B);
+        questions[1] = new Questions("Vad brinner Emil för allra mest i sitt liv?", "Hockey", "Sudoku", "Platon", Answer.C);
+
     }
 }
 
