@@ -16,31 +16,43 @@ public class Main {
         terminal.setCursorVisible(false);
 
         boolean continueReadingInput = true;
-        Answer playerAnswer;
+        Answer playerAnswer = null;
+
+        Questions[] questions = new Questions[2];
+
+        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.C);
+        questions[1] = new Questions("Fråga 2", "Svar A", "Svar B", "Svar C", Answer.B);
+        
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
 
             do {
                 keyStroke = terminal.pollInput();
             } while(keyStroke == null);
-        Character c = keyStroke.getCharacter();
 
+            for (int i = 0; i < questions.length; i++) {
+                Character c = keyStroke.getCharacter();
+                switch (c) {
+                    case 'a':
+                        playerAnswer = Answer.A;
+                        break;
 
-        switch (c) {
-            case 'a':
-                playerAnswer = Answer.A;
-                break;
+                    case 'b':
+                        playerAnswer = Answer.B;
+                        break;
 
-            case 'b':
-                playerAnswer = Answer.B;
-                break;
-            case 'c':
-                playerAnswer = Answer.C;
-                break;
-
-
-        }
-
+                    case 'c':
+                        playerAnswer = Answer.C;
+                        break;
+                }
+                
+                if (playerAnswer.equals(questions[i].correctAnswer)){
+                    //Här ska vi skriva kod för vad som händer vid korrekt svar.
+                } else {
+                    //Här ska vi skriva vad som händer vid fel svar. 
+                }
+                
+            }
         }
 
         String svarsalternativ1 = "Ruta ett";
@@ -64,11 +76,7 @@ public class Main {
             terminal.setCursorPosition(50 + i, 17);
             terminal.putCharacter(svarsalternativ3.charAt(i));
         }
-
-        Questions[] questions = new Questions[2];
-
-        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.C);
-        questions[1] = new Questions("Fråga 2", "Svar A", "Svar B", "Svar C", Answer.B);
+        
     }
 
     public static void getQuestions(Questions[] questions){
