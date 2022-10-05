@@ -8,6 +8,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import javax.swing.*;
 
 public class Main {
+
     public static void main(String[] args) throws Exception{
         TerminalSize ts = new TerminalSize(70, 20);
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
@@ -18,19 +19,40 @@ public class Main {
         boolean continueReadingInput = true;
         Answer playerAnswer = null;
 
-        Questions[] questions = new Questions[2];
+        Questions[] questions = new Questions[3];
 
-        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.C);
-        questions[1] = new Questions("Fråga 2", "Svar A", "Svar B", "Svar C", Answer.B);
-        
+        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.A);
+        questions[1] = new Questions("Fråga 2", "Svar AA", "Svar BB", "Svar CC", Answer.B);
+        questions[1] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
+
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
 
-            do {
-                keyStroke = terminal.pollInput();
-            } while(keyStroke == null);
-
             for (int i = 0; i < questions.length; i++) {
+
+                for (int j = 0; j < questions[i].answerA.length(); j++) {
+                    terminal.setCursorPosition(2 + j, 17);
+                    terminal.putCharacter(questions[i].answerA.charAt(j));
+                    terminal.flush();
+                }
+
+                for (int k = 0; k < questions[i].answerB.length(); k++) {
+                    terminal.setCursorPosition(25 + k, 17);
+                    terminal.putCharacter(questions[i].answerB.charAt(k));
+                    terminal.flush();
+                }
+
+                for (int l = 0; l < questions[i].answerC.length(); l++) {
+                    terminal.setCursorPosition(50 + l, 17);
+                    terminal.putCharacter(questions[i].answerC.charAt(l));
+                    terminal.flush();
+                }
+
+                do {
+                    keyStroke = terminal.pollInput();
+                } while(keyStroke == null);
+
+
                 Character c = keyStroke.getCharacter();
                 switch (c) {
                     case 'a':
@@ -47,9 +69,17 @@ public class Main {
                 }
                 
                 if (playerAnswer.equals(questions[i].correctAnswer)){
-                    //Här ska vi skriva kod för vad som händer vid korrekt svar.
+
+                    String korrektsvar = "RÄTT!";
+                    terminal.setCursorPosition(25 + i, 17);
+                    terminal.putCharacter(korrektsvar.charAt(i));
+                    terminal.flush();
+
                 } else {
-                    //Här ska vi skriva vad som händer vid fel svar. 
+                    String felsvar = "FEL!";
+                    terminal.setCursorPosition(25 + i, 17);
+                    terminal.putCharacter(felsvar.charAt(i));
+                    terminal.flush();
                 }
                 
             }
@@ -79,10 +109,8 @@ public class Main {
         
     }
 
-    public static void getQuestions(Questions[] questions){
-        for (int i = 0; i < questions.length; i++) {
+    public static void getQuestions(Questions question){
 
-        }
     }
 }
 
