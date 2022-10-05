@@ -1,6 +1,8 @@
 package org.example;
 
+import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -15,20 +17,36 @@ public class Main {
         defaultTerminalFactory.setInitialTerminalSize(ts);
         Terminal terminal = defaultTerminalFactory.createTerminal();
         terminal.setCursorVisible(false);
+        terminal.setForegroundColor(TextColor.ANSI.GREEN);
+        terminal.setBackgroundColor(TextColor.ANSI.WHITE);
+        terminal.enableSGR(SGR.BOLD);
 
         boolean continueReadingInput = true;
         Answer playerAnswer = null;
+        int score = 0;
 
         Questions[] questions = new Questions[3];
 
         questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.A);
         questions[1] = new Questions("Fråga 2", "Svar AA", "Svar BB", "Svar CC", Answer.B);
-        questions[1] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
+        questions[2] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
 
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
 
             for (int i = 0; i < questions.length; i++) {
+                String scoreString = String.format("Score: %01d", score);
+                for (int j = 0; j < scoreString.length(); j++) {
+                    terminal.setCursorPosition(2 + j,2);
+                    terminal.putCharacter(scoreString.charAt(j));
+                    terminal.flush();
+                }
+
+                for (int j = 0; j < questions[i].question.length(); j++) {
+                    terminal.setCursorPosition(25 + j, 10);
+                    terminal.putCharacter(questions[i].question.charAt(j));
+                    terminal.flush();
+                }
 
                 for (int j = 0; j < questions[i].answerA.length(); j++) {
                     terminal.setCursorPosition(2 + j, 17);
@@ -66,20 +84,31 @@ public class Main {
                     case 'c':
                         playerAnswer = Answer.C;
                         break;
+
+                    default:
+                        break;
                 }
                 
                 if (playerAnswer.equals(questions[i].correctAnswer)){
 
                     String korrektsvar = "RÄTT!";
-                    terminal.setCursorPosition(25 + i, 17);
-                    terminal.putCharacter(korrektsvar.charAt(i));
+                    for (int j = 0; j < korrektsvar.length(); j++) {
+                        terminal.setCursorPosition(25 + j, 5);
+                        terminal.putCharacter(korrektsvar.charAt(j));
+                    }
+                    score += 1;
                     terminal.flush();
 
-                } else {
+
+                } else if (!playerAnswer.equals(questions[i].correctAnswer)) {
                     String felsvar = "FEL!";
-                    terminal.setCursorPosition(25 + i, 17);
-                    terminal.putCharacter(felsvar.charAt(i));
+                    for (int j = 0; j < felsvar.length(); j++) {
+                        terminal.setCursorPosition(25 + j, 5);
+                        terminal.putCharacter(felsvar.charAt(j));
+                    }
                     terminal.flush();
+                } else {
+                    continue;
                 }
                 
             }
