@@ -5,9 +5,8 @@ public class Main {
 
         Questions[] questions = new Questions[2];
 
-        questions[0] = new Questions("Vad betyder Jafari på persiska?", "Saffran", "Persilja", "Curry", Answer.B);
-        questions[1] = new Questions("Vad brinner Emil för allra mest i sitt liv?", "Hockey", "Sudoku", "Platon", Answer.C);
-
+        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.C);
+        questions[1] = new Questions("Fråga 2", "Svar A", "Svar B", "Svar C", Answer.B);
     }
 }
 
