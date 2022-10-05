@@ -1,6 +1,7 @@
 package org.example;
 
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
@@ -15,12 +16,31 @@ public class Main {
         terminal.setCursorVisible(false);
 
         boolean continueReadingInput = true;
+        Answer playerAnswer;
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
 
             do {
-                keyStroke.terminal.
-            }
+                keyStroke = terminal.pollInput();
+            } while(keyStroke == null);
+        Character c = keyStroke.getCharacter();
+
+
+        switch (c) {
+            case 'a':
+                playerAnswer = Answer.A;
+                break;
+
+            case 'b':
+                playerAnswer = Answer.B;
+                break;
+            case 'c':
+                playerAnswer = Answer.C;
+                break;
+
+
+        }
+
         }
 
         String svarsalternativ1 = "Ruta ett";
