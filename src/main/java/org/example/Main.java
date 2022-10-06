@@ -18,7 +18,7 @@ public class Main {
         Terminal terminal = defaultTerminalFactory.createTerminal();
         terminal.setCursorVisible(false);
         terminal.setForegroundColor(TextColor.ANSI.GREEN);
-        terminal.setBackgroundColor(TextColor.ANSI.WHITE);
+        //terminal.setBackgroundColor(TextColor.ANSI.WHITE);
         terminal.enableSGR(SGR.BOLD);
 
         boolean continueReadingInput = true;
@@ -33,6 +33,7 @@ public class Main {
 
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
+
 
             for (int i = 0; i < questions.length; i++) {
                 String scoreString = String.format("Score: %01d", score);
@@ -67,9 +68,9 @@ public class Main {
                 }
 
                 do {
+                    Thread.sleep(5);
                     keyStroke = terminal.pollInput();
                 } while(keyStroke == null);
-
 
                 Character c = keyStroke.getCharacter();
                 switch (c) {
@@ -96,6 +97,12 @@ public class Main {
                         terminal.setCursorPosition(25 + j, 5);
                         terminal.putCharacter(korrektsvar.charAt(j));
                     }
+                    terminal.flush();
+                    Thread.sleep(500);
+                    for (int j = 0; j < korrektsvar.length(); j++) {
+                        terminal.setCursorPosition(25 + j, 5);
+                        terminal.putCharacter(' ');
+                    }
                     score += 1;
                     terminal.flush();
 
@@ -107,6 +114,11 @@ public class Main {
                         terminal.putCharacter(felsvar.charAt(j));
                     }
                     terminal.flush();
+                    Thread.sleep(500);
+                    for (int j = 0; j < felsvar.length(); j++) {
+                        terminal.setCursorPosition(25 + j, 5);
+                        terminal.putCharacter(' ');
+                    }
                 } else {
                     continue;
                 }
