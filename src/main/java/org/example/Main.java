@@ -29,9 +29,9 @@ public class Main {
         Questions[] questions = new Questions[3];
 
 
-        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.A);
-        questions[1] = new Questions("Fråga 2", "Svar AA", "Svar BB", "Svar CC", Answer.B);
-        questions[2] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
+        questions[0] = new Questions("Hur många äpplen finns det på jorden?", "Svar A", "Svar B", "Svar C", Answer.A);
+        questions[1] = new Questions("Hur många hjul har en bil?", "Svar AA", "Svar BB", "Svar CC", Answer.B);
+        questions[2] = new Questions("Vilket datum är julafton?", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
 
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
