@@ -26,14 +26,15 @@ public class Main {
         Answer playerAnswer = null;
         int score = 0;
 
-        Questions[] questions = new Questions[5];
+        Questions[] questions = new Questions[6];
 
 
-        questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.A);
-        questions[1] = new Questions("Fråga 2", "Svar AA", "Svar BB", "Svar CC", Answer.B);
-        questions[2] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
-        questions[3] = new Questions("När grundades Public Service?", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
-        questions[4] = new Questions("Hur gammalt är Swedbank", "A. 199", "B. 201", "B. 202", Answer.B);
+        questions[0] = new Questions("Vad betyder Jafari på persiska?", "A. Saffran", "B. Persilja", "C. Curry", Answer.B);
+        questions[1] = new Questions("Vad brinner Emil för mest i sitt liv?", "A. Hockey    ", "B. Sudoku     ", "C. Platon     ", Answer.C);
+        questions[2] = new Questions("Vad uppskattar Gabriel mest i livet?", "A. Originalburgare", "B. Dafgårds lasagne", "C. Mineralvatten", Answer.B);
+        questions[3] = new Questions("Vad vill Felix allra helst just nu?", "A. Rädda regnskogen  ", "B. Äta bolognese", "C. Spela CS 1.6", Answer.B);
+        questions[4] = new Questions("Hur gammalt är Swedbank", "A. 199                          ", "B. 201                    ", "C. 202                  ", Answer.C);
+        questions[5] = new Questions("              TREVLIG HELG!!!                          ", "                        ", "             ", "                  ", Answer.C);
 
         while (continueReadingInput) {
             KeyStroke keyStroke = null;
@@ -48,7 +49,7 @@ public class Main {
                 }
 
                 for (int j = 0; j < questions[i].question.length(); j++) {
-                    terminal.setCursorPosition(10 + j, 10);
+                    terminal.setCursorPosition(15 + j, 10);
                     terminal.putCharacter(questions[i].question.charAt(j));
                     terminal.flush();
                 }
