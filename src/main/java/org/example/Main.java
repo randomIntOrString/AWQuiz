@@ -8,6 +8,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
 
@@ -27,6 +28,7 @@ public class Main {
 
         Questions[] questions = new Questions[3];
 
+
         questions[0] = new Questions("Fråga 1", "Svar A", "Svar B", "Svar C", Answer.A);
         questions[1] = new Questions("Fråga 2", "Svar AA", "Svar BB", "Svar CC", Answer.B);
         questions[2] = new Questions("Fråga 3", "Svar AAA", "Svar BBB", "Svar CCC", Answer.C);
@@ -44,7 +46,7 @@ public class Main {
                 }
 
                 for (int j = 0; j < questions[i].question.length(); j++) {
-                    terminal.setCursorPosition(25 + j, 10);
+                    terminal.setCursorPosition(10 + j, 10);
                     terminal.putCharacter(questions[i].question.charAt(j));
                     terminal.flush();
                 }
@@ -73,56 +75,89 @@ public class Main {
                 } while(keyStroke == null);
 
                 Character c = keyStroke.getCharacter();
-                switch (c) {
-                    case 'a':
-                        playerAnswer = Answer.A;
-                        break;
+                //do {
+                try {
+                    switch (c) {
+                        case 'a':
+                            playerAnswer = Answer.A;
+                            break;
 
-                    case 'b':
-                        playerAnswer = Answer.B;
-                        break;
+                        case 'b':
+                            playerAnswer = Answer.B;
+                            break;
 
-                    case 'c':
-                        playerAnswer = Answer.C;
-                        break;
+                        case 'c':
+                            playerAnswer = Answer.C;
+                            break;
 
-                    default:
-                        break;
-                }
-                
-                if (playerAnswer.equals(questions[i].correctAnswer)){
-
-                    String korrektsvar = "RÄTT!";
-                    for (int j = 0; j < korrektsvar.length(); j++) {
-                        terminal.setCursorPosition(25 + j, 5);
-                        terminal.putCharacter(korrektsvar.charAt(j));
+                        default:
+                            String felknapp = "Nej, nu klickade du fel.";
+                            for (int j = 0; j < felknapp.length(); j++) {
+                                terminal.setCursorPosition(30 + j, 5);
+                                terminal.putCharacter(felknapp.charAt(j));
+                            }
+                            terminal.flush();
+                            Thread.sleep(500);
+                            for (int j = 0; j < felknapp.length(); j++) {
+                                terminal.setCursorPosition(30 + j, 5);
+                                terminal.putCharacter(' ');
+                            }
+                            break;
+                    }
+                } catch (NullPointerException e) {
+                    String felknapp = "Nej, nu klickade du fel.";
+                    for (int j = 0; j < felknapp.length(); j++) {
+                        terminal.setCursorPosition(30 + j, 5);
+                        terminal.putCharacter(felknapp.charAt(j));
                     }
                     terminal.flush();
                     Thread.sleep(500);
-                    for (int j = 0; j < korrektsvar.length(); j++) {
-                        terminal.setCursorPosition(25 + j, 5);
+                    for (int j = 0; j < felknapp.length(); j++) {
+                        terminal.setCursorPosition(30 + j, 5);
                         terminal.putCharacter(' ');
                     }
-                    score += 1;
-                    terminal.flush();
-
-
-                } else if (!playerAnswer.equals(questions[i].correctAnswer)) {
-                    String felsvar = "FEL!";
-                    for (int j = 0; j < felsvar.length(); j++) {
-                        terminal.setCursorPosition(25 + j, 5);
-                        terminal.putCharacter(felsvar.charAt(j));
-                    }
-                    terminal.flush();
-                    Thread.sleep(500);
-                    for (int j = 0; j < felsvar.length(); j++) {
-                        terminal.setCursorPosition(25 + j, 5);
-                        terminal.putCharacter(' ');
-                    }
-                } else {
-                    continue;
                 }
-                
+                //} while (playerAnswer == null);
+
+                try {
+                    if (playerAnswer.equals(questions[i].correctAnswer)){
+
+                        String korrektsvar = "RÄTT!";
+                        for (int j = 0; j < korrektsvar.length(); j++) {
+                            terminal.setCursorPosition(30 + j, 5);
+                            terminal.putCharacter(korrektsvar.charAt(j));
+                        }
+                        terminal.flush();
+                        Thread.sleep(500);
+                        for (int j = 0; j < korrektsvar.length(); j++) {
+                            terminal.setCursorPosition(30 + j, 5);
+                            terminal.putCharacter(' ');
+                        }
+                        score += 1;
+                        terminal.flush();
+
+
+                    } else {
+                        String felsvar = "FEL!";
+                        for (int j = 0; j < felsvar.length(); j++) {
+                            terminal.setCursorPosition(30 + j, 5);
+                            terminal.putCharacter(felsvar.charAt(j));
+                        }
+                        terminal.flush();
+                        Thread.sleep(500);
+                        for (int j = 0; j < felsvar.length(); j++) {
+                            terminal.setCursorPosition(30 + j, 5);
+                            terminal.putCharacter(' ');
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (NullPointerException e) {
+                    break;
+                }
+
             }
         }
 
@@ -147,7 +182,7 @@ public class Main {
             terminal.setCursorPosition(50 + i, 17);
             terminal.putCharacter(svarsalternativ3.charAt(i));
         }
-        
+
     }
 
     public static void getQuestions(Questions question){
